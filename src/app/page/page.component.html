@@ -1,0 +1,40 @@
+<div class="parent">
+    <div class="div1"> 
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre Pokemón</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="
+                        let pokemon of pokemon
+                        | paginate
+                        :{
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                        };
+                        let i= index" (click)="onCellClicked()">
+                        <a href="#" class="list-group-item list-group-item-action">
+                           <div class="d-flex w-80 justify-content-between">
+                                {{i+1}} - {{pokemon.name}}
+                            </div>
+                        </a>
+                    </tr>
+
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-left">
+            <pagination-controls previousLabel="Ant." nextLabel="Sig." (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+        </div>
+    </div>
+
+
+
+
+    <div class="div2"> B</div>
+</div>
