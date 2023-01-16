@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { PokemonService } from '../services/pokemon.service';
 
 
@@ -10,22 +12,17 @@ import { PokemonService } from '../services/pokemon.service';
 })
 export class HeaderComponent implements OnInit {
   titleApplication = 'Pokedex';
-  pokeSearch: any = {};
 
 
 
-  constructor(private service: PokemonService, private fb: FormBuilder) { }
+  constructor(private service: PokemonService, ) { }
 
   ngOnInit(){
-    this.getPokemon;
+
   }
 
-  getPokemon(){
-    this.service.pokeSearch().subscribe(res =>{
-      this.pokeSearch = res
-      console.log(this.pokeSearch)
-    })
-  }
+
+
 
 
 }

@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { PokemonService } from '../services/pokemon.service';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-page',
@@ -8,38 +12,100 @@ import { PokemonService } from '../services/pokemon.service';
 })
 export class PageComponent implements OnInit {
 
-  pokemon: any = {};
+  displayedColumns: string[] = ['position', 'image', 'name'];
+  data: any[] = [];
+  datasource = new MatTableDataSource<any>(this.data);
+  Pokemon: any = [];
+  container2: boolean = false;
 
-  constructor(private service: PokemonService) { 
+  pokemon: any = '';
+  pokemonType = [];
+  pokemonImg = '';
+  id = '';
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+
+
+  constructor(
+    private pokeService: PokemonService,
+    private activatedRouter: ActivatedRoute) {
+      // this.activatedRouter.params.subscribe(
+      //   params =>{
+      //     this.getOnePokemon(params['id']);
+      //   }
+      // )
+
   }
 
   ngOnInit(): void {
-    this.service.getAllPokemon().subscribe(poke =>{
-      this.pokemon = poke.results;
-      console.log(this.pokemon);
-    });
+    this.getAllPokemons();
   }
 
-  page: number = 1;
-  count: number = 0;
-  tableSize: number = 5;
-  
-  
-  onTableDataChange(event: any){
-    this.page = event;
-    this.ngOnInit();
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.datasource.filter = filterValue.trim().toLowerCase();
+
+    if (this.datasource.paginator) {
+      this.datasource.paginator.firstPage();
+    }
   }
 
-  onTableSizeChange(event: any):void {
-    this.tableSize = event.target.value;
-    this.page = 1;
-    this.ngOnInit();
+
+
+  getAllPokemons() {
+    let pokemonData;
+    for (let i = 1; i <= 150; i++) {
+      this.pokeService.getAllPokemon(i).subscribe({
+        next: (poke) => {
+          pokemonData = {
+            position: i,
+            image: poke.sprites.front_default,
+            name: poke.name
+          },
+          this.data.push(pokemonData);
+          this.datasource = new MatTableDataSource<any>(this.data);
+          this.datasource.paginator = this.paginator;
+          this.Pokemon = poke;
+          //console.log(this.Pokemon)
+        }
+        
+      });
+
+    }
   }
 
-  onCellClicked(){
-    console.log(this.pokemon.index); //Falta traer el numero de id, para poder visualizar los detalles.
-  } 
+  getRow(row) {
+    // console.log(row);
+    this.container2 = true;
+    // console.log(row.position);
+    this.id = row.position;
+    // console.log(this.id);
+
+  }
+
   
+   getOnePokemon(id){
+
+     this.pokeService.getPokemon(this.id).subscribe(
+     res =>{
+       this.pokemon = res;
+       this.pokemonImg = this.pokemon.sprites.front_default;
+       this.pokemonType = res.types[0].type.name
+       console.log(this.pokemon);
+     },
+     err => {
+      console.log(err);
+   }
+
+
+
+   );
+
+   }
+
+
 
 }
 

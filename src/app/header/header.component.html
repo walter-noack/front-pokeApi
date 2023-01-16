@@ -1,20 +1,4 @@
 <nav class="navbar navbar-dark bg-danger">
     <p class="title">{{titleApplication}}</p>
-    <form class="d-flex">
-        <input class="form-control me-2" matInput type="text" [matAutocomplete]="auto">
-
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor = "let pokemon of pokeSearch" [value]="pokemon">
-                {{pokemon.name}}
-            </mat-option>
-        </mat-autocomplete>
-
-
-
-
-        <button class="btn btn-outline-light" type="submit">Buscar</button>
-    </form>
-
-
     
 </nav>
