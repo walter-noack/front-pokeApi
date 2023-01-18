@@ -1,7 +1,31 @@
 <div class="parent">
 
+
+    <div class="dropdown">
+        Selecciona la cantidad de pokemones
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Generación
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">1ªGen (150)</a></li>
+          <li><a class="dropdown-item" href="#">2ªGen (251)</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+
+<!-- 
+Primera generación: 151
+Segunda generación: 251
+Tercera Generación: 386
+Cuarta Generación: 493
+Quinta Generación: 649
+Sexta Generación: 721
+Septima Generación: 809
+Octava Generación: 898 
+-->
+
     <div class="container1">
-        <mat-form-field>
+        <mat-form-field class="filter">
             <mat-label>Búsqueda por Nombre</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Charizard" #input>
         </mat-form-field>
@@ -44,8 +68,9 @@
 
     <div class="container2" *ngIf ="container2">
 
-        <mat-card>
+        <mat-card class="card">
             <mat-card-header>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeCard()"></button>
                 <img mat-card-avatar class="header-img" src="{{pokemonImg}}" width="100" height="100">
                 <mat-card-title>{{pokemon.name}}</mat-card-title>
                 <mat-card-subtitle>Nº {{pokemon.id}}</mat-card-subtitle>
@@ -53,22 +78,46 @@
  
             <img src="{{pokemonImg}}" alt="pokemon" class="poke-img"><br>
 
-            <mat-card-content>
-                <mat-chip-list aria-label="Fish selection">
-                    <mat-chip color="primary" selected> Tipo: {{pokemonType}}  </mat-chip>
-                    <mat-chip color="primary" selected> Altura: {{pokemon.height}}  </mat-chip>
-                    <mat-chip color="primary" selected> Peso: {{pokemon.weight}}  </mat-chip>
-    
+            <mat-card-content class="content">
+                <mat-chip-list class ="chip-list" aria-label="Fish selection">
+                    
+                    
+                    <mat-chip color="accent" selected> Altura: {{pokemon.height/10}} m  </mat-chip>
+                    <mat-chip color="accent" selected> Peso: {{pokemon.weight/10}} kg </mat-chip>
+                    <mat-chip color="primary" selected> Tipo: {{pokemonType01}}  </mat-chip>
+                    <mat-chip color="warn" selected> {{stat01Name}}: {{stat01Value}}  </mat-chip>
+                    <mat-chip color="warn" selected> {{stat02Name}}: {{stat02Value}}  </mat-chip>
+                    <mat-chip color="warn" selected> {{stat03Name}}: {{stat03Value}}  </mat-chip>
 
 
                 </mat-chip-list>
-               
-                
-
-
-
+                          
             </mat-card-content>
           </mat-card>
           
     </div>
+    
 </div>
+
+<div class="summary-table">
+    <p class="table-title">CANTIDAD DE POKEMONES POR LETRA DEL ABECEDARIO</p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th>LETRA</th>
+              <th>CANTIDAD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let letter of alphabet">
+              <td>{{letter}}</td>
+              <td>{{countNamesByLetter(letter)}}</td>
+            </tr>
+          </tbody>
+      </table>
+    
+
+
+</div>
+

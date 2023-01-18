@@ -15,6 +15,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatChipsModule } from '@angular/material/chips'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,11 @@ import { MatChipsModule } from '@angular/material/chips'
     MatFormFieldModule,
     MatPaginatorModule,
     MatButtonModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+
+    
 
   ],
   providers: [],

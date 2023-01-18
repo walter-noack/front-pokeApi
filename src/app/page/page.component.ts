@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PokemonService } from '../services/pokemon.service';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-page',
@@ -15,33 +13,33 @@ export class PageComponent implements OnInit {
   displayedColumns: string[] = ['position', 'image', 'name'];
   data: any[] = [];
   datasource = new MatTableDataSource<any>(this.data);
+  dataNombre: any[] = [];
   Pokemon: any = [];
   container2: boolean = false;
 
   pokemon: any = '';
-  pokemonType = [];
+  pokemonType01 = [];
+  pokemonType02 = [];
   pokemonImg = '';
+  pokemonMove = '';
   id = '';
+  stat01Name ='';
+  stat01Value='';
+  stat02Name ='';
+  stat02Value ='';
+  stat03Name ='';
+  stat03Value ='';
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-
-
   constructor(
-    private pokeService: PokemonService,
-    private activatedRouter: ActivatedRoute) {
-      // this.activatedRouter.params.subscribe(
-      //   params =>{
-      //     this.getOnePokemon(params['id']);
-      //   }
-      // )
-
-  }
+    private pokeService: PokemonService) { }
 
   ngOnInit(): void {
     this.getAllPokemons();
-  }
+    this.getNames();
 
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -51,8 +49,6 @@ export class PageComponent implements OnInit {
       this.datasource.paginator.firstPage();
     }
   }
-
-
 
   getAllPokemons() {
     let pokemonData;
@@ -64,48 +60,66 @@ export class PageComponent implements OnInit {
             image: poke.sprites.front_default,
             name: poke.name
           },
-          this.data.push(pokemonData);
+            this.data.push(pokemonData);
           this.datasource = new MatTableDataSource<any>(this.data);
           this.datasource.paginator = this.paginator;
           this.Pokemon = poke;
           //console.log(this.Pokemon)
         }
-        
+
       });
 
     }
   }
 
   getRow(row) {
-    // console.log(row);
     this.container2 = true;
-    // console.log(row.position);
     this.id = row.position;
-    // console.log(this.id);
 
   }
 
-  
-   getOnePokemon(id){
+  closeCard() {
+    this.container2 = false;
+  }
 
-     this.pokeService.getPokemon(this.id).subscribe(
-     res =>{
-       this.pokemon = res;
-       this.pokemonImg = this.pokemon.sprites.front_default;
-       this.pokemonType = res.types[0].type.name
-       console.log(this.pokemon);
-     },
-     err => {
-      console.log(err);
-   }
+  getOnePokemon(id) {
+    this.pokeService.getPokemon(this.id).subscribe(
+      res => {
+        this.pokemon = res;
+        this.pokemonImg = this.pokemon.sprites.front_default;
+        this.pokemonType01 = res.types[0].type.name;
+        this.pokemonType02 = res.types[1].type.name;
+        this.stat01Name = res.stats[0].stat.name;
+        this.stat01Value = res.stats[0].base_stat;
+        this.stat02Name = res.stats[1].stat.name;
+        this.stat02Value = res.stats[1].base_stat;
+        this.stat03Name = res.stats[2].stat.name;
+        this.stat03Value = res.stats[2].base_stat;
+        console.log(this.pokemon);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
 
+  pokeNames: any = [];
 
+  getNames() {
+    let dataNames = [];
+    for (let j = 1; j <= 150; j++) {
+      this.pokeService.getAllPokemon(j).subscribe(poke => {
+        this.dataNombre.push(poke.name);
+      })
+    }
+  }
 
-   );
+  namesTable = this.dataNombre
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-   }
-
-
+  countNamesByLetter(letter: string): number {
+    return this.namesTable.filter(name => name.toLowerCase().startsWith(letter)).length;
+  }
 
 }
 
