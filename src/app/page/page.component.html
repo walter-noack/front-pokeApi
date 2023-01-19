@@ -1,10 +1,15 @@
 <div class="search">
-    
-        <p for="exampleDataList" class="form-label">Búsqueda por Nombre</p>
-        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="ej. Charizard" [(ngModel)]="selectedItem" (keydown.enter)="onChangeSearch(selectedItem)" (keyup)="onChangeSearch(selectedItem)">
-        <datalist id="datalistOptions" >
-            <option class="options" *ngFor="let poke of data" value={{poke.name}}>
-        </datalist>
+
+    <p for="exampleDataList" class="form-label">Búsqueda por Nombre</p>
+    <input class="form-control" 
+        list="datalistOptions" 
+        id="exampleDataList" 
+        placeholder="ej. Charizard"
+        [(ngModel)]="selectedItem" (keydown.enter)="onChangeSearch(selectedItem)"
+        (keyup)="onChangeSearch(selectedItem)">
+    <datalist id="datalistOptions">
+        <option class="options" *ngFor="let poke of data" value={{poke.name}}>
+    </datalist>
 
 
 </div>

@@ -61,12 +61,6 @@ export class PageComponent implements OnInit {
     }
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.datasource.filter = filterValue.trim().toLowerCase();
-
-
-  }
 
   //Listado de Pokemones 
   getAllPokemons() {
@@ -89,6 +83,7 @@ export class PageComponent implements OnInit {
 
     }
   }
+  
   //Obtener ID de Pokemon
   getRow(row) {
     this.container2 = true;
@@ -122,7 +117,7 @@ export class PageComponent implements OnInit {
   }
 
 
-  // Tabla con conteo de pokemones de acuerdo a su nombre
+  // Tabla resumen
   pokeNames: any = [];
 
   getNames() {
@@ -133,7 +128,6 @@ export class PageComponent implements OnInit {
       })
     }
   }
-
 
   namesTable = this.dataNombre
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
