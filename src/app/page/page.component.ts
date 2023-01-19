@@ -65,7 +65,7 @@ export class PageComponent implements OnInit {
   //Listado de Pokemones 
   getAllPokemons() {
     let pokemonData;
-    for (let i = 1; i <= 150; i++) {
+    for (let i = 1; i <= 898; i++) {
       this.pokeService.getAllPokemon(i).subscribe({
         next: (poke) => {
           pokemonData = {
@@ -83,7 +83,7 @@ export class PageComponent implements OnInit {
 
     }
   }
-  
+
   //Obtener ID de Pokemon
   getRow(row) {
     this.container2 = true;
@@ -122,7 +122,7 @@ export class PageComponent implements OnInit {
 
   getNames() {
     let dataNames = [];
-    for (let j = 1; j <= 150; j++) {
+    for (let j = 1; j <= 898; j++) {
       this.pokeService.getAllPokemon(j).subscribe(poke => {
         this.dataNombre.push(poke.name);
       })
