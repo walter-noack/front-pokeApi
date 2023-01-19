@@ -1,13 +1,27 @@
-.parent{
-    width: 80%; 
-    position: absolute;
-} 
+
+.options::first-letter{
+    text-transform:uppercase !important;
+}
+
+.form-control{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Montserrat";
+
+}
+
+.form-label{
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Montserrat";
+}
+
 
 .container1{
     margin-top: 15px;
     float: left; 
     width: 50%;
-
     margin-left: 10%; 
     height: 100px; 
 
@@ -64,6 +78,7 @@
 /* CARD */
 
 .card{
+    margin-top:-30%;
     width: 250px;
     position: relative;
 }

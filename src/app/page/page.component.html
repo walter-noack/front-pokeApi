@@ -1,34 +1,16 @@
+<div class="search">
+    
+        <p for="exampleDataList" class="form-label">Búsqueda por Nombre</p>
+        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="ej. Charizard" [(ngModel)]="selectedItem" (keydown.enter)="onChangeSearch(selectedItem)" (keyup)="onChangeSearch(selectedItem)">
+        <datalist id="datalistOptions" >
+            <option class="options" *ngFor="let poke of data" value={{poke.name}}>
+        </datalist>
+
+
+</div>
 <div class="parent">
 
-
-    <div class="dropdown">
-        Selecciona la cantidad de pokemones
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Generación
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">1ªGen (150)</a></li>
-          <li><a class="dropdown-item" href="#">2ªGen (251)</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
-
-<!-- 
-Primera generación: 151
-Segunda generación: 251
-Tercera Generación: 386
-Cuarta Generación: 493
-Quinta Generación: 649
-Sexta Generación: 721
-Septima Generación: 809
-Octava Generación: 898 
--->
-
     <div class="container1">
-        <mat-form-field class="filter">
-            <mat-label>Búsqueda por Nombre</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Charizard" #input>
-        </mat-form-field>
 
         <div class="mat-elevation-z8" id="table">
             <table id=table mat-table [dataSource]="datasource" matSort>
@@ -54,11 +36,12 @@ Octava Generación: 898
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRow(row); getOnePokemon(row)"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRow(row); getOnePokemon(row)">
+                </tr>
 
                 <!-- Row shown when there is no matching data. -->
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    <td class="mat-cell" colspan="4">No data matching the filter</td>
                 </tr>
             </table>
 
@@ -66,7 +49,7 @@ Octava Generación: 898
         </div>
     </div>
 
-    <div class="container2" *ngIf ="container2">
+    <div class="container2" *ngIf="container2">
 
         <mat-card class="card">
             <mat-card-header>
@@ -75,27 +58,27 @@ Octava Generación: 898
                 <mat-card-title>{{pokemon.name}}</mat-card-title>
                 <mat-card-subtitle>Nº {{pokemon.id}}</mat-card-subtitle>
             </mat-card-header>
- 
+
             <img src="{{pokemonImg}}" alt="pokemon" class="poke-img"><br>
 
             <mat-card-content class="content">
-                <mat-chip-list class ="chip-list" aria-label="Fish selection">
-                    
-                    <mat-chip color="accent" selected> Altura: {{pokemon.height/10}} m  </mat-chip>
+                <mat-chip-list class="chip-list" aria-label="Fish selection">
+
+                    <mat-chip color="accent" selected> Altura: {{pokemon.height/10}} m </mat-chip>
                     <mat-chip color="accent" selected> Peso: {{pokemon.weight/10}} kg </mat-chip>
-                    <mat-chip color="primary" selected> Tipo: {{pokemonType01}}  </mat-chip>
-                    <mat-chip color="warn" selected> {{stat01Name}}: {{stat01Value}}  </mat-chip>
-                    <mat-chip color="warn" selected> {{stat02Name}}: {{stat02Value}}  </mat-chip>
-                    <mat-chip color="warn" selected> {{stat03Name}}: {{stat03Value}}  </mat-chip>
+                    <mat-chip color="primary" selected> Tipo: {{pokemonType01}} </mat-chip>
+                    <mat-chip color="warn" selected> {{stat01Name}}: {{stat01Value}} </mat-chip>
+                    <mat-chip color="warn" selected> {{stat02Name}}: {{stat02Value}} </mat-chip>
+                    <mat-chip color="warn" selected> {{stat03Name}}: {{stat03Value}} </mat-chip>
 
 
                 </mat-chip-list>
-                          
+
             </mat-card-content>
-          </mat-card>
-          
+        </mat-card>
+
     </div>
-    
+
 </div>
 
 <div class="summary-table">
@@ -104,19 +87,18 @@ Octava Generación: 898
     <table class="table table-striped">
         <thead>
             <tr>
-              <th>LETRA</th>
-              <th>CANTIDAD</th>
+                <th>LETRA</th>
+                <th>CANTIDAD</th>
             </tr>
-          </thead>
-          <tbody>
+        </thead>
+        <tbody>
             <tr *ngFor="let letter of alphabet">
-              <td>{{letter}}</td>
-              <td>{{countNamesByLetter(letter)}}</td>
+                <td>{{letter}}</td>
+                <td>{{countNamesByLetter(letter)}}</td>
             </tr>
-          </tbody>
-      </table>
-    
+        </tbody>
+    </table>
+
 
 
 </div>
-

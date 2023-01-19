@@ -17,18 +17,21 @@ export class PageComponent implements OnInit {
   Pokemon: any = [];
   container2: boolean = false;
 
+  poke: any = '';
   pokemon: any = '';
   pokemonType01 = [];
   pokemonType02 = [];
   pokemonImg = '';
   pokemonMove = '';
   id = '';
-  stat01Name ='';
-  stat01Value='';
-  stat02Name ='';
-  stat02Value ='';
-  stat03Name ='';
-  stat03Value ='';
+  stat01Name = '';
+  stat01Value = '';
+  stat02Name = '';
+  stat02Value = '';
+  stat03Name = '';
+  stat03Value = '';
+
+
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -41,15 +44,31 @@ export class PageComponent implements OnInit {
 
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.datasource.filter = filterValue.trim().toLowerCase();
+  //AUTOCOMPLETAR
+  selectedItem: string = '';
 
+  selectEvent(filterV: string) {
+    console.log(this.selectedItem);
+    this.datasource.filter = filterV.trim().toLowerCase();
+
+
+  }
+
+  onChangeSearch(val: string) {
+    this.datasource.filter = this.selectedItem.trim().toLowerCase();
     if (this.datasource.paginator) {
       this.datasource.paginator.firstPage();
     }
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.datasource.filter = filterValue.trim().toLowerCase();
+
+
+  }
+
+  //Listado de Pokemones 
   getAllPokemons() {
     let pokemonData;
     for (let i = 1; i <= 150; i++) {
@@ -64,20 +83,20 @@ export class PageComponent implements OnInit {
           this.datasource = new MatTableDataSource<any>(this.data);
           this.datasource.paginator = this.paginator;
           this.Pokemon = poke;
-          //console.log(this.Pokemon)
         }
 
       });
 
     }
   }
-
+  //Obtener ID de Pokemon
   getRow(row) {
     this.container2 = true;
     this.id = row.position;
 
   }
 
+  //Ficha con detalles de pokemón
   closeCard() {
     this.container2 = false;
   }
@@ -88,7 +107,6 @@ export class PageComponent implements OnInit {
         this.pokemon = res;
         this.pokemonImg = this.pokemon.sprites.front_default;
         this.pokemonType01 = res.types[0].type.name;
-        this.pokemonType02 = res.types[1].type.name;
         this.stat01Name = res.stats[0].stat.name;
         this.stat01Value = res.stats[0].base_stat;
         this.stat02Name = res.stats[1].stat.name;
@@ -103,6 +121,8 @@ export class PageComponent implements OnInit {
     );
   }
 
+
+  // Tabla con conteo de pokemones de acuerdo a su nombre
   pokeNames: any = [];
 
   getNames() {
@@ -114,12 +134,17 @@ export class PageComponent implements OnInit {
     }
   }
 
+
   namesTable = this.dataNombre
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
   countNamesByLetter(letter: string): number {
     return this.namesTable.filter(name => name.toLowerCase().startsWith(letter)).length;
   }
+
+
+
+
 
 }
 
